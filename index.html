@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teknik Persidangan Dalam Organisasi</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 50%, #1e3a5f 100%);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        
+        .accordion-content.active {
+            max-height: 2000px;
+        }
+        
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .accordion-icon.rotate {
+            transform: rotate(180deg);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #fbbf24;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .palu-animation {
+            animation: palu 0.3s ease-in-out;
+        }
+        
+        @keyframes palu {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-30deg); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .pulse-dot {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .sidebar {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .sidebar.open {
+            transform: translateX(0);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        .quiz-option:hover {
+            background: #e0f2fe;
+        }
+        
+        .quiz-option.correct {
+            background: #bbf7d0 !important;
+            border-color: #22c55e !important;
+        }
+        
+        .quiz-option.wrong {
+            background: #fecaca !important;
+            border-color: #ef4444 !important;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #1e3a5f;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="gradient-bg text-white fixed w-full top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <button id="menuBtn" class="lg:hidden p-2 hover:bg-white/20 rounded-lg transition">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                    <div class="text-xl font-bold">📜 Teknik Persidangan</div>
+                </div>
+                <div class="hidden lg:flex items-center gap-6">
+                    <a href="#beranda" class="nav-link hover:text-yellow-300 transition">Beranda</a>
+                    <a href="#jenis" class="nav-link hover:text-yellow-300 transition">Jenis Sidang</a>
+                    <a href="#aturan" class="nav-link hover:text-yellow-300 transition">Aturan</a>
+                    <a href="#ketukan" class="nav-link hover:text-yellow-300 transition">Ketukan Palu</a>
+                    <a href="#interupsi" class="nav-link hover:text-yellow-300 transition">Interupsi</a>
+                    <a href="#quiz" class="nav-link hover:text-yellow-300 transition">Quiz</a>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="hidden sm:block text-sm bg-yellow-500 text-gray-900 px-3 py-1 rounded-full font-medium">Materi Pembelajaran</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Sidebar -->
+    <div id="sidebar" class="sidebar fixed top-0 left-0 h-full w-64 bg-gray-900 text-white z-50 pt-16 lg:hidden">
+        <div class="p-4">
+            <div class="space-y-2">
+                <a href="#beranda" class="block py-2 px-4 hover:bg-gray-700 rounded transition" onclick="closeSidebar()">🏠 Beranda</a>
+                <a href="#jenis" class="block py-2 px-4 hover:bg-gray-700 rounded transition" onclick="closeSidebar()">📋 Jenis Sidang</a>
+                <a href="#aturan" class="block py-2 px-4 hover:bg-gray-700 rounded transition" onclick="closeSidebar()">📖 Aturan Umum</a>
+                <a href="#ketukan" class="block py-2 px-4 hover:bg-gray-700 rounded transition" onclick="closeSidebar()">🔨 Ketukan Palu</a>
+                <a href="#interupsi" class="block py-2 px-4 hover:bg-gray-700 rounded transition" onclick="closeSidebar()">✋ Interupsi</a>
+                <a href="#quiz" class="block py-2 px-4 hover:bg-gray-700 rounded transition" onclick="closeSidebar()">❓ Quiz</a>
+            </div>
+        </div>
+    </div>
+    <div id="overlay" class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden" onclick="closeSidebar()"></div>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="gradient-bg text-white pt-24 pb-16 min-h-screen flex items-center">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center fade-in">
+                <div class="text-6xl mb-6">🏛️</div>
+                <h1 class="text-3xl md:text-5xl font-bold mb-6">Teknik Persidangan Dalam Organisasi</h1>
+                <p class="text-lg md:text-xl text-blue-100 mb-8 leading-relaxed">
+                    Pelajari tata cara persidangan formal dalam organisasi untuk menghasilkan keputusan yang efektif dan demokratis
+                </p>
+                <div class="flex flex-wrap justify-center gap-4 mb-12">
+                    <a href="#jenis" class="bg-yellow-500 text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-yellow-400 transition transform hover:scale-105">
+                        Mulai Belajar 📚
+                    </a>
+                    <a href="#quiz" class="bg-white/20 backdrop-blur px-6 py-3 rounded-lg font-semibold hover:bg-white/30 transition">
+                        Uji Pemahaman ✍️
+                    </a>
+                </div>
+                
+                <!-- Info Cards -->
+                <div class="grid md:grid-cols-3 gap-6 mt-12">
+                    <div class="bg-white/10 backdrop-blur rounded-xl p-6 card-hover transition duration-300">
+                        <div class="text-4xl mb-3">📋</div>
+                        <h3 class="font-semibold text-lg mb-2">Jenis Persidangan</h3>
+                        <p class="text-blue-100 text-sm">Pleno, Paripurna, dan Komisi</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur rounded-xl p-6 card-hover transition duration-300">
+                        <div class="text-4xl mb-3">🔨</div>
+                        <h3 class="font-semibold text-lg mb-2">Ketukan Palu</h3>
+                        <p class="text-blue-100 text-sm">1x, 2x, dan 3x ketukan</p>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur rounded-xl p-6 card-hover transition duration-300">
+                        <div class="text-4xl mb-3">✋</div>
+                        <h3 class="font-semibold text-lg mb-2">Interupsi</h3>
+                        <p class="text-blue-100 text-sm">5 jenis interupsi sidang</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latar Belakang -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <span class="bg-blue-100 text-blue-800 px-4 py-1 rounded-full text-sm font-medium">Pendahuluan</span>
+                    <h2 class="text-3xl font-bold text-gray-800 mt-4">Latar Belakang Persidangan</h2>
+                </div>
+                
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 shadow-lg">
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="text-4xl">💡</div>
+                        <div>
+                            <h3 class="font-semibold text-xl text-gray-800 mb-3">Apa itu Persidangan?</h3>
+                            <p class="text-gray-600 leading-relaxed">
+                                Persidangan adalah <strong>pertemuan formal</strong> sebuah organisasi guna membahas masalah tertentu 
+                                dalam upaya untuk menghasilkan keputusan yang dijadikan sebagai sebuah <strong>Ketetapan bersama</strong>.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mt-8">
+                        <div class="bg-white rounded-xl p-5 shadow">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="bg-green-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">✓</span>
+                                <h4 class="font-semibold text-gray-800">Sifat Keputusan</h4>
+                            </div>
+                            <p class="text-gray-600 text-sm">Keputusan bersifat <strong>final</strong> dan mengikat kepada seluruh elemen organisasi</p>
+                        </div>
+                        <div class="bg-white rounded-xl p-5 shadow">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="bg-blue-500 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">⚖️</span>
+                                <h4 class="font-semibold text-gray-800">Berlaku Untuk</h4>
+                            </div>
+                            <p class="text-gray-600 text-sm">Yang setuju atau tidak, hadir atau tidak hadir saat persidangan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jenis Persidangan -->
+    <section id="jenis" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-12">
+                    <span class="bg-indigo-100 text-indigo-800 px-4 py-1 rounded-full text-sm font-medium">Materi Utama</span>
+                    <h2 class="text-3xl font-bold text-gray-800 mt-4">Jenis-Jenis Persidangan</h2>
+                    <p class="text-gray-600 mt-2">Klik pada setiap kartu untuk mempelajari lebih detail</p>
+                </div>
+
+                <!-- Tabs -->
+                <div class="flex flex-wrap justify-center gap-2 mb-8">
+                    <button onclick="showTab('pleno')" class="tab-btn px-6 py-3 rounded-lg font-medium transition bg-blue-600 text-white" data-tab="pleno">
+                        Sidang Pleno
+                    </button>
+                    <button onclick="showTab('paripurna')" class="tab-btn px-6 py-3 rounded-lg font-medium transition bg-gray-200 text-gray-700" data-tab="paripurna">
+                        Sidang Paripurna
+                    </button>
+                    <button onclick="showTab('komisi')" class="tab-btn px-6 py-3 rounded-lg font-medium transition bg-gray-200 text-gray-700" data-tab="komisi">
+                        Sidang Komisi
+                    </button>
+                </div>
+
+                <!-- Tab Contents -->
+                <div id="pleno" class="tab-content active">
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                        <div class="bg-blue-600 text-white p-6">
+                            <div class="flex items-center gap-4">
+                                <div class="text-5xl">👥</div>
+                                <div>
+                                    <h3 class="text-2xl font-bold">Sidang Pleno</h3>
+                                    <p class="text-blue-100">Sidang dengan seluruh peserta permusyawaratan</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3">
+                                    <span class="bg-blue-100 text-blue-600 p-2 rounded-lg mt-1">👤</span>
+                                    <div>
+                                        <strong class="text-gray-800">Peserta</strong>
+                                        <p class="text-gray-600 text-sm">Diikuti oleh seluruh peserta dan peninjau Permusyawaratan</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="bg-blue-100 text-blue-600 p-2 rounded-lg mt-1">🎙️</span>
+                                    <div>
+                                        <strong class="text-gray-800">Pimpinan</strong>
+                                        <p class="text-gray-600 text-sm">Dipimpin oleh Presidium Sidang</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="bg-blue-100 text-blue-600 p-2 rounded-lg mt-1">📋</span>
+                                    <div>
+                                        <strong class="text-gray-800">Panduan</strong>
+                                        <p class="text-gray-600 text-sm">Dipandu oleh Steering Committee (Panitia Pengarah)</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="bg-blue-100 text-blue-600 p-2 rounded-lg mt-1">📝</span>
+                                    <div>
+                                        <strong class="text-gray-800">Fungsi</strong>
+                                        <p class="text-gray-600 text-sm">Membahas dan memutuskan segala sesuatu yang berhubungan dengan Permusyawaratan</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="paripurna" class="tab-content">
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                        <div class="bg-green-600 text-white p-6">
+                            <div class="flex items-center gap-4">
+                                <div class="text-5xl">✅</div>
+                                <div>
+                                    <h3 class="text-2xl font-bold">Sidang Paripurna</h3>
+                                    <p class="text-green-100">Sidang untuk pengesahan ketetapan</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3">
+                                    <span class="bg-green-100 text-green-600 p-2 rounded-lg mt-1">👤</span>
+                                    <div>
+                                        <strong class="text-gray-800">Peserta</strong>
+                                        <p class="text-gray-600 text-sm">Diikuti oleh seluruh peserta dan peninjau Permusyawaratan</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="bg-green-100 text-green-600 p-2 rounded-lg mt-1">🎙️</span>
+                                    <div>
+                                        <strong class="text-gray-800">Pimpinan</strong>
+                                        <p class="text-gray-600 text-sm">Dipimpin oleh Presidium Sidang</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="bg-green-100 text-green-600 p-2 rounded-lg mt-1">⚖️</span>
+                                    <div>
+                                        <strong class="text-gray-800">Fungsi Utama</strong>
+                                        <p class="text-gray-600 text-sm">Mengesahkan segala ketetapan dan keputusan yang berhubungan dengan Permusyawaratan</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="komisi" class="tab-content">
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                        <div class="bg-purple-600 text-white p-6">
+                            <div class="flex items-center gap-4">
+                                <div class="text-5xl">👨‍👩‍👧‍👦</div>
+                                <div>
+                                    <h3 class="text-2xl font-bold">Sidang Komisi</h3>
+                                    <p class="text-purple-100">Sidang kelompok untuk materi tertentu</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3">
+                                    <span class="bg-purple-100 text-purple-600 p-2 rounded-lg mt-1">👤</span>
+                                    <div>
+                                        <strong class="text-gray-800">Peserta</strong>
+                                        <p class="text-gray-600 text-sm">Diikuti oleh anggota masing-masing Komisi yang ditentukan oleh Sidang Pleno</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="bg-purple-100 text-purple-600 p-2 rounded-lg mt-1">🎙️</span>
+                                    <div>
+                                        <strong class="text-gray-800">Pimpinan</strong>
+                                        <p class="text-gray-600 text-sm">Dipilih dari dan oleh anggota Komisi, dibantu Sekretaris Sidang</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <span class="bg-purple-100 text-purple-600 p-2 rounded-lg mt-1">📝</span>
+                                    <div>
+                                        <strong class="text-gray-800">Fungsi</strong>
+                                        <p class="text-gray-600 text-sm">Membahas materi-materi yang menjadi tugas dari Komisi yang bersangkutan</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Aturan Umum -->
+    <section id="aturan" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-12">
+                    <span class="bg-amber-100 text-amber-800 px-4 py-1 rounded-full text-sm font-medium">Panduan</span>
+                    <h2 class="text-3xl font-bold text-gray-800 mt-4">Aturan Umum Persidangan</h2>
+                </div>
+
+                <!-- Accordion -->
+                <div class="space-y-4">
+                    <!-- Peserta Penuh -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                        <button class="accordion-btn w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition">
+                            <div class="flex items-center gap-4">
+                                <span class="bg-green-500 text-white w-12 h-12 rounded-xl flex items-center justify-center text-2xl">👤</span>
+                                <div class="text-left">
+                                    <h3 class="font-semibold text-gray-800 text-lg">Peserta Penuh</h3>
+                                    <p class="text-gray-500 text-sm">Hak dan kewajiban peserta penuh</p>
+                                </div>
+                            </div>
+                            <svg class="accordion-icon w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="px-6 pb-6">
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div class="bg-green-50 rounded-xl p-5">
+                                        <h4 class="font-semibold text-green-800 mb-4 flex items-center gap-2">
+                                            <span>✅</span> Hak Peserta Penuh
+                                        </h4>
+                                        <ul class="space-y-3 text-sm">
+                                            <li class="flex items-start gap-2">
+                                                <span class="text-green-500 mt-1">•</span>
+                                                <div><strong>Hak Bicara:</strong> Bertanya, mengeluarkan pendapat, mengajukan usulan</div>
+                                            </li>
+                                            <li class="flex items-start gap-2">
+                                                <span class="text-green-500 mt-1">•</span>
+                                                <div><strong>Hak Suara:</strong> Ikut dalam pengambilan keputusan</div>
+                                            </li>
+                                            <li class="flex items-start gap-2">
+                                                <span class="text-green-500 mt-1">•</span>
+                                                <div><strong>Hak Memilih:</strong> Menentukan pilihan dalam pemilihan</div>
+                                            </li>
+                                            <li class="flex items-start gap-2">
+                                                <span class="text-green-500 mt-1">•</span>
+                                                <div><strong>Hak Dipilih:</strong> Dapat dipilih dalam proses pemilihan</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-amber-50 rounded-xl p-5">
+                                        <h4 class="font-semibold text-amber-800 mb-4 flex items-center gap-2">
+                                            <span>📋</span> Kewajiban Peserta Penuh
+                                        </h4>
+                                        <ul class="space-y-3 text-sm">
+                                            <li class="flex items-start gap-2">
+                                                <span class="text-amber-500 mt-1">•</span>
+                                                <div>Mentaati tata tertib persidangan/permusyawaratan</div>
+                                            </li>
+                                            <li class="flex items-start gap-2">
+                                                <span class="text-amber-500 mt-1">•</span>
+                                                <div>Menjaga ketenangan/harmonisasi persidangan</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Peserta Peninjau -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                        <button class="accordion-btn w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition">
+                            <div class="flex items-center gap-4">
+                                <span class="bg-blue-500 text-white w-12 h-12 rounded-xl flex items-center justify-center text-2xl">👁️</span>
+                                <div class="text-left">
+                                    <h3 class="font-semibold text-gray-800 text-lg">Peserta Peninjau</h3>
+                                    <p class="text-gray-500 text-sm">Hak dan kewajiban peninjau</p>
+                                </div>
+                            </div>
+                            <svg class="accordion-icon w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="px-6 pb-6">
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div class="bg-blue-50 rounded-xl p-5">
+                                        <h4 class="font-semibold text-blue-800 mb-4 flex items-center gap-2">
+                                            <span>✅</span> Hak Peninjau
+                                        </h4>
+                                        <ul class="space-y-3 text-sm">
+                                            <li class="flex items-start gap-2">
+                                                <span class="text-blue-500 mt-1">•</span>
+                                                <div><strong>Hak Bicara:</strong> Bertanya, mengeluarkan pendapat, mengajukan usulan</div>
+                                            </li>
+                                        </ul>
+                                        <div class="mt-4 p-3 bg-red-50 rounded-lg">
+                                            <p class="text-red-600 text-xs"><strong>Catatan:</strong> Peninjau TIDAK memiliki hak suara, hak memilih, dan hak dipilih</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-amber-50 rounded-xl p-5">
+                                        <h4 class="font-semibold text-amber-800 mb-4 flex items-center gap-2">
+                                            <span>📋</span> Kewajiban Peninjau
+                                        </h4>
+                                        <ul class="space-y-3 text-sm">
+                                            <li class="flex items-start gap-2">
+                                                <span class="text-amber-500 mt-1">•</span>
+                                                <div>Mentaati tata tertib persidangan/permusyawaratan</div>
+                                            </li>
+                                            <li class="flex items-start gap-2">
+                                                <span class="text-amber-500 mt-1">•</span>
+                                                <div>Menjaga ketenangan/harmonisasi persidangan</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Presidium Sidang -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                        <button class="accordion-btn w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition">
+                            <div class="flex items-center gap-4">
+                                <span class="bg-purple-500 text-white w-12 h-12 rounded-xl flex items-center justify-center text-2xl">🎙️</span>
+                                <div class="text-left">
+                                    <h3 class="font-semibold text-gray-800 text-lg">Presidium Sidang</h3>
+                                    <p class="text-gray-500 text-sm">Pemimpin persidangan</p>
+                                </div>
+                            </div>
+                            <svg class="accordion-icon w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="px-6 pb-6">
+                                <div class="grid md:grid-cols-3 gap-4 mb-6">
+                                    <div class="bg-purple-50 rounded-xl p-4 text-center">
+                                        <div class="text-3xl mb-2">📋</div>
+                                        <h5 class="font-semibold text-purple-800 text-sm">Pemilihan</h5>
+                                        <p class="text-xs text-gray-600 mt-1">Dipilih dari dan oleh peserta melalui Sidang Pleno</p>
+                                    </div>
+                                    <div class="bg-purple-50 rounded-xl p-4 text-center">
+                                        <div class="text-3xl mb-2">⚙️</div>
+                                        <h5 class="font-semibold text-purple-800 text-sm">Tugas</h5>
+                                        <p class="text-xs text-gray-600 mt-1">Memimpin dan mengatur jalannya persidangan</p>
+                                    </div>
+                                    <div class="bg-purple-50 rounded-xl p-4 text-center">
+                                        <div class="text-3xl mb-2">⚖️</div>
+                                        <h5 class="font-semibold text-purple-800 text-sm">Kekuasaan</h5>
+                                        <p class="text-xs text-gray-600 mt-1">Menjalankan tata tertib persidangan</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid md:grid-cols-2 gap-6">
+                                    <div class="bg-indigo-50 rounded-xl p-5">
+                                        <h4 class="font-semibold text-indigo-800 mb-4">📌 Syarat Presidium</h4>
+                                        <ul class="space-y-2 text-sm text-gray-700">
+                                            <li>• Leadership, bijaksana, bertanggung jawab</li>
+                                            <li>• Pengetahuan cukup tentang persidangan</li>
+                                            <li>• Peka situasi & cepat mengambil inisiatif</li>
+                                            <li>• Mampu mengontrol emosi</li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-pink-50 rounded-xl p-5">
+                                        <h4 class="font-semibold text-pink-800 mb-4">💎 Sikap Presidium</h4>
+                                        <ul class="space-y-2 text-sm text-gray-700">
+                                            <li>• Simpatik, menarik, tegas, disiplin</li>
+                                            <li>• Sopan dan hormat</li>
+                                            <li>• Adil dan bijaksana</li>
+                                            <li>• Menghargai pendapat peserta</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quorum -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                        <button class="accordion-btn w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition">
+                            <div class="flex items-center gap-4">
+                                <span class="bg-red-500 text-white w-12 h-12 rounded-xl flex items-center justify-center text-2xl">📊</span>
+                                <div class="text-left">
+                                    <h3 class="font-semibold text-gray-800 text-lg">Quorum & Pengambilan Keputusan</h3>
+                                    <p class="text-gray-500 text-sm">Syarat sah persidangan</p>
+                                </div>
+                            </div>
+                            <svg class="accordion-icon w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div class="accordion-content">
+                            <div class="px-6 pb-6">
+                                <div class="space-y-4">
+                                    <div class="bg-red-50 rounded-xl p-5 flex items-start gap-4">
+                                        <div class="bg-red-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold flex-shrink-0">1</div>
+                                        <div>
+                                            <h5 class="font-semibold text-red-800">Syarat Quorum</h5>
+                                            <p class="text-gray-600 text-sm mt-1">Persidangan sah apabila dihadiri minimal <strong>½ + 1</strong> dari peserta terdaftar</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-amber-50 rounded-xl p-5 flex items-start gap-4">
+                                        <div class="bg-amber-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold flex-shrink-0">2</div>
+                                        <div>
+                                            <h5 class="font-semibold text-amber-800">Dasar Keputusan</h5>
+                                            <p class="text-gray-600 text-sm mt-1">Musyawarah untuk mufakat, jika tidak berhasil → suara terbanyak (½ + 1)</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-blue-50 rounded-xl p-5 flex items-start gap-4">
+                                        <div class="bg-blue-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold flex-shrink-0">3</div>
+                                        <div>
+                                            <h5 class="font-semibold text-blue-800">Jika Suara Seimbang</h5>
+                                            <p class="text-gray-600 text-sm mt-1">Dilakukan <strong>lobbying</strong> sebelum pemungutan suara ulang</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ketukan Palu -->
+    <section id="ketukan" class="py-16 bg-gradient-to-br from-gray-800 to-gray-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-12">
+                    <span class="bg-yellow-500 text-gray-900 px-4 py-1 rounded-full text-sm font-medium">Interaktif</span>
+                    <h2 class="text-3xl font-bold mt-4">Aturan Ketukan Palu 🔨</h2>
+                    <p class="text-gray-400 mt-2">Klik pada palu untuk melihat simulasi ketukan!</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 mb-12">
+                    <!-- 1 Ketukan -->
+                    <div class="bg-white/10 backdrop-blur rounded-2xl p-6 text-center hover:bg-white/20 transition cursor-pointer" onclick="ketukanPalu(1)">
+                        <div id="palu1" class="text-6xl mb-4">🔨</div>
+                        <div class="bg-yellow-500 text-gray-900 text-2xl font-bold w-12 h-12 rounded-full mx-auto flex items-center justify-center mb-4">1×</div>
+                        <h3 class="font-semibold text-lg mb-3">Satu Ketukan</h3>
+                        <ul class="text-left text-sm text-gray-300 space-y-2">
+                            <li>• Menerima/menyerahkan pimpinan</li>
+                            <li>• Keputusan sementara (per poin)</li>
+                            <li>• Peringatan ketenangan</li>
+                            <li>• Skors singkat</li>
+                            <li>• Membatalkan ketukan keliru</li>
+                        </ul>
+                    </div>
+
+                    <!-- 2 Ketukan -->
+                    <div class="bg-white/10 backdrop-blur rounded-2xl p-6 text-center hover:bg-white/20 transition cursor-pointer" onclick="ketukanPalu(2)">
+                        <div id="palu2" class="text-6xl mb-4">🔨</div>
+                        <div class="bg-orange-500 text-white text-2xl font-bold w-12 h-12 rounded-full mx-auto flex items-center justify-center mb-4">2×</div>
+                        <h3 class="font-semibold text-lg mb-3">Dua Ketukan</h3>
+                        <ul class="text-left text-sm text-gray-300 space-y-2">
+                            <li>• Skorsing waktu lama</li>
+                            <li>• Istirahat</li>
+                            <li>• Lobbying</li>
+                            <li>• Sembahyang/Makan</li>
+                            <li>• Mencabut skorsing lama</li>
+                        </ul>
+                    </div>
+
+                    <!-- 3 Ketukan -->
+                    <div class="bg-white/10 backdrop-blur rounded-2xl p-6 text-center hover:bg-white/20 transition cursor-pointer" onclick="ketukanPalu(3)">
+                        <div id="palu3" class="text-6xl mb-4">🔨</div>
+                        <div class="bg-red-500 text-white text-2xl font-bold w-12 h-12 rounded-full mx-auto flex items-center justify-center mb-4">3×</div>
+                        <h3 class="font-semibold text-lg mb-3">Tiga Ketukan</h3>
+                        <ul class="text-left text-sm text-gray-300 space-y-2">
+                            <li>• Membuka sidang</li>
+                            <li>• Menutup sidang</li>
+                            <li>• Acara resmi</li>
+                            <li>• Keputusan final/akhir</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Contoh Kalimat -->
+                <div class="bg-white/5 backdrop-blur rounded-2xl p-6">
+                    <h3 class="font-semibold text-xl mb-6 text-center">📝 Contoh Kalimat Presidium Sidang</h3>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-green-500/20 rounded-xl p-4">
+                            <h4 class="font-medium text-green-400 mb-2">Membuka Sidang</h4>
+                            <p class="text-sm italic">"Dengan mengucapkan Bismillahirrohmanirrohim, sidang pleno I saya nyatakan dibuka." <span class="text-yellow-400">tok...tok...tok</span></p>
+                        </div>
+                        <div class="bg-red-500/20 rounded-xl p-4">
+                            <h4 class="font-medium text-red-400 mb-2">Menutup Sidang</h4>
+                            <p class="text-sm italic">"Dengan mengucapkan Alhamdulillahirobbil 'Alamin, sidang pleno I saya nyatakan ditutup." <span class="text-yellow-400">tok...tok...tok</span></p>
+                        </div>
+                        <div class="bg-blue-500/20 rounded-xl p-4">
+                            <h4 class="font-medium text-blue-400 mb-2">Mengalihkan Pimpinan</h4>
+                            <p class="text-sm italic">"Dengan ini pimpinan sidang saya alihkan kepada pimpinan sidang berikutnya." <span class="text-yellow-400">tok</span></p>
+                        </div>
+                        <div class="bg-purple-500/20 rounded-xl p-4">
+                            <h4 class="font-medium text-purple-400 mb-2">Mengambil Alih</h4>
+                            <p class="text-sm italic">"Dengan ini pimpinan sidang saya ambil alih." <span class="text-yellow-400">tok</span></p>
+                        </div>
+                        <div class="bg-orange-500/20 rounded-xl p-4">
+                            <h4 class="font-medium text-orange-400 mb-2">Menskorsing</h4>
+                            <p class="text-sm italic">"Dengan ini sidang saya skorsing selama 15 menit." <span class="text-yellow-400">tok...tok</span></p>
+                        </div>
+                        <div class="bg-cyan-500/20 rounded-xl p-4">
+                            <h4 class="font-medium text-cyan-400 mb-2">Mencabut Skorsing</h4>
+                            <p class="text-sm italic">"Dengan ini skorsing 15 menit saya cabut dan saya nyatakan sidang dilanjutkan." <span class="text-yellow-400">tok...tok</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interupsi -->
+    <section id="interupsi" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-12">
+                    <span class="bg-rose-100 text-rose-800 px-4 py-1 rounded-full text-sm font-medium">Tata Cara</span>
+                    <h2 class="text-3xl font-bold text-gray-800 mt-4">Jenis-Jenis Interupsi ✋</h2>
+                    <p class="text-gray-600 mt-2">Selaan untuk memberikan masukan dalam persidangan</p>
+                </div>
+
+                <div class="grid gap-4">
+                    <!-- Interupsi Cards -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-blue-500 hover:shadow-xl transition">
+                        <div class="flex items-start gap-4">
+                            <div class="bg-blue-100 text-blue-600 p-3 rounded-xl text-2xl">📋</div>
+                            <div>
+                                <h3 class="font-semibold text-lg text-gray-800">Interruption of Order</h3>
+                                <p class="text-gray-600 mt-2 text-sm">Meminta penjelasan atau masukan berkaitan jalannya persidangan. Digunakan saat pembicaraan sudah melebar dari pokok masalah agar dikembalikan ke topik utama.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-green-500 hover:shadow-xl transition">
+                        <div class="flex items-start gap-4">
+                            <div class="bg-green-100 text-green-600 p-3 rounded-xl text-2xl">ℹ️</div>
+                            <div>
+                                <h3 class="font-semibold text-lg text-gray-800">Interruption of Information</h3>
+                                <p class="text-gray-600 mt-2 text-sm">Memberikan informasi yang perlu diperhatikan seluruh peserta. Bisa internal (data topik) atau eksternal (situasi di luar ruangan).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-500 hover:shadow-xl transition">
+                        <div class="flex items-start gap-4">
+                            <div class="bg-purple-100 text-purple-600 p-3 rounded-xl text-2xl">❓</div>
+                            <div>
+                                <h3 class="font-semibold text-lg text-gray-800">Interruption of Clarification</h3>
+                                <p class="text-gray-600 mt-2 text-sm">Meminta klarifikasi tentang pernyataan peserta lain agar tidak terjadi kesalahpahaman atau penangkapan yang bias.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-orange-500 hover:shadow-xl transition">
+                        <div class="flex items-start gap-4">
+                            <div class="bg-orange-100 text-orange-600 p-3 rounded-xl text-2xl">💬</div>
+                            <div>
+                                <h3 class="font-semibold text-lg text-gray-800">Interruption of Explanation</h3>
+                                <p class="text-gray-600 mt-2 text-sm">Menjelaskan pernyataan yang kita sampaikan agar tidak ditangkap keliru oleh peserta lain, atau pelurusan atas pernyataan kita.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-red-500 hover:shadow-xl transition">
+                        <div class="flex items-start gap-4">
+                            <div class="bg-red-100 text-red-600 p-3 rounded-xl text-2xl">🛡️</div>
+                            <div>
+                                <h3 class="font-semibold text-lg text-gray-800">Interruption of Personal</h3>
+                                <p class="text-gray-600 mt-2 text-sm">Disampaikan bila pernyataan peserta lain sudah di luar pokok masalah dan cenderung menyerang secara pribadi.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pelaksanaan Interupsi -->
+                <div class="mt-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl p-6 text-white">
+                    <h3 class="font-semibold text-xl mb-4">📌 Tata Cara Pelaksanaan Interupsi</h3>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="bg-white/20 backdrop-blur rounded-xl p-4">
+                            <div class="text-3xl mb-2">✋</div>
+                            <p class="text-sm">Angkat tangan terlebih dahulu</p>
+                        </div>
+                        <div class="bg-white/20 backdrop-blur rounded-xl p-4">
+                            <div class="text-3xl mb-2">👂</div>
+                            <p class="text-sm">Tunggu izin dari Presidium Sidang</p>
+                        </div>
+                        <div class="bg-white/20 backdrop-blur rounded-xl p-4">
+                            <div class="text-3xl mb-2">🗣️</div>
+                            <p class="text-sm">Baru mulai berbicara</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 bg-white/10 rounded-xl p-4">
+                        <p class="text-sm"><strong>⚠️ Catatan:</strong> Jika Presidium tidak mampu menguasai jalannya persidangan, Panitia Pengarah (SC) dapat mengambil alih atas permintaan Presidium atau Peserta Sidang.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tata Tertib & Sanksi -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-5xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-4xl">📜</span>
+                            <h3 class="font-bold text-xl text-gray-800">Tata Tertib</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            Tata tertib persidangan merupakan hasil <strong>kesepakatan seluruh peserta</strong> pada saat persidangan dengan memperhatikan aturan umum organisasi dan nilai-nilai universal di masyarakat.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-red-50 to-orange-100 rounded-2xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-4xl">⚠️</span>
+                            <h3 class="font-bold text-xl text-gray-800">Sanksi-Sanksi</h3>
+                        </div>
+                        <div class="text-gray-600 text-sm leading-relaxed space-y-2">
+                            <p>Peserta yang melanggar tata tertib akan dikenakan sanksi:</p>
+                            <ol class="list-decimal list-inside space-y-1">
+                                <li>Peringatan (biasanya sampai 3 kali)</li>
+                                <li>Dikeluarkan dari forum (dengan kesepakatan bersama)</li>
+                                <li>Kebijakan lain oleh presidium</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section id="quiz" class="py-16 bg-gradient-to-br from-indigo-600 to-purple-700 text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-12">
+                    <span class="bg-white text-indigo-600 px-4 py-1 rounded-full text-sm font-medium">Evaluasi</span>
+                    <h2 class="text-3xl font-bold mt-4">Quiz Pemahaman 📝</h2>
+                    <p class="text-indigo-200 mt-2">Uji pemahaman Anda tentang teknik persidangan!</p>
+                </div>
+
+                <div id="quizContainer" class="bg-white rounded-2xl p-6 text-gray-800">
+                    <div id="quizContent">
+                        <!-- Quiz will be loaded here -->
+                    </div>
+                    
+                    <div id="quizResult" class="hidden text-center py-8">
+                        <div class="text-6xl mb-4">🎉</div>
+                        <h3 class="text-2xl font-bold text-gray-800">Quiz Selesai!</h3>
+                        <p id="scoreText" class="text-lg text-gray-600 mt-2"></p>
+                        <button onclick="restartQuiz()" class="mt-6 bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition">
+                            Ulangi Quiz
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="quizProgress" class="mt-6 flex justify-center gap-2">
+                    <!-- Progress dots -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <div class="text-3xl mb-4">🏛️</div>
+            <h3 class="font-bold text-xl mb-2">Teknik Persidangan Dalam Organisasi</h3>
+            <p class="text-gray-400 text-sm">Materi Pembelajaran untuk Mahasiswa Baru</p>
+            <div class="mt-6 pt-6 border-t border-gray-800 text-gray-500 text-sm">
+                <p>© 2024 - Materi Pendidikan Organisasi</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button id="backToTop" onclick="scrollToTop()" class="fixed bottom-6 right-6 bg-blue-600 text-white w-12 h-12 rounded-full shadow-lg hover:bg-blue-700 transition hidden items-center justify-center z-50">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+        </svg>
+    </button>
+
+    <script>
+        // Mobile Menu
+        const menuBtn = document.getElementById('menuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        
+        menuBtn.addEventListener('click', () => {
+            sidebar.classList.add('open');
+            overlay.classList.remove('hidden');
+        });
+        
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            overlay.classList.add('hidden');
+        }
+
+        // Tabs
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white');
+                btn.classList.add('bg-gray-200', 'text-gray-700');
+            });
+            
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`[data-tab="${tabId}"]`).classList.remove('bg-gray-200', 'text-gray-700');
+            document.querySelector(`[data-tab="${tabId}"]`).classList.add('bg-blue-600', 'text-white');
+        }
+
+        // Accordion
+        document.querySelectorAll('.accordion-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const content = btn.nextElementSibling;
+                const icon = btn.querySelector('.accordion-icon');
+                
+                content.classList.toggle('active');
+                icon.classList.toggle('rotate');
+            });
+        });
+
+        // Ketukan Palu Animation
+        function ketukanPalu(times) {
+            const palu = document.getElementById(`palu${times}`);
+            let count = 0;
+            
+            const animate = () => {
+                if (count < times) {
+                    palu.classList.add('palu-animation');
+                    setTimeout(() => {
+                        palu.classList.remove('palu-animation');
+                        count++;
+                        if (count < times) {
+                            setTimeout(animate, 200);
+                        }
+                    }, 300);
+                }
+            };
+            
+            animate();
+        }
+
+        // Quiz
+        const quizData = [
+            {
+                question: "Berapa kali ketukan palu untuk membuka sidang?",
+                options: ["1 kali", "2 kali", "3 kali", "4 kali"],
+                correct: 2
+            },
+            {
+                question: "Apa yang dimaksud dengan Quorum?",
+                options: [
+                    "Pemimpin sidang",
+                    "Jumlah minimum peserta agar sidang sah",
+                    "Jenis interupsi",
+                    "Hasil keputusan"
+                ],
+                correct: 1
+            },
+            {
+                question: "Jenis interupsi yang digunakan saat ada serangan pribadi adalah?",
+                options: [
+                    "Interruption of Order",
+                    "Interruption of Information",
+                    "Interruption of Clarification",
+                    "Interruption of Personal"
+                ],
+                correct: 3
+            },
+            {
+                question: "Hak apa yang TIDAK dimiliki oleh Peserta Peninjau?",
+                options: [
+                    "Hak Bicara",
+                    "Hak Suara",
+                    "Hak bertanya",
+                    "Hak mengajukan usulan"
+                ],
+                correct: 1
+            },
+            {
+                question: "Sidang apa yang berfungsi mengesahkan ketetapan final?",
+                options: [
+                    "Sidang Pleno",
+                    "Sidang Komisi",
+                    "Sidang Paripurna",
+                    "Sidang Umum"
+                ],
+                correct: 2
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        function loadQuiz() {
+            if (currentQuestion >= quizData.length) {
+                showResult();
+                return;
+            }
+
+            answered = false;
+            const quiz = quizData[currentQuestion];
+            const quizContent = document.getElementById('quizContent');
+            
+            let optionsHTML = '';
+            quiz.options.forEach((option, index) => {
+                optionsHTML += `
+                    <button onclick="checkAnswer(${index})" class="quiz-option w-full text-left p-4 border-2 border-gray-200 rounded-xl mb-3 hover:border-indigo-400 transition">
+                        <span class="font-medium text-gray-700">${String.fromCharCode(65 + index)}.</span> ${option}
+                    </button>
+                `;
+            });
+
+            quizContent.innerHTML = `
+                <div class="mb-6">
+                    <span class="text-sm text-indigo-600 font-medium">Pertanyaan ${currentQuestion + 1} dari ${quizData.length}</span>
+                    <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                        <div class="bg-indigo-600 h-2 rounded-full transition-all" style="width: ${((currentQuestion) / quizData.length) * 100}%"></div>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-6">${quiz.question}</h3>
+                <div class="space-y-3">
+                    ${optionsHTML}
+                </div>
+            `;
+
+            updateProgress();
+        }
+
+        function checkAnswer(selected) {
+            if (answered) return;
+            answered = true;
+
+            const quiz = quizData[currentQuestion];
+            const options = document.querySelectorAll('.quiz-option');
+            
+            options.forEach((option, index) => {
+                option.disabled = true;
+                if (index === quiz.correct) {
+                    option.classList.add('correct');
+                } else if (index === selected && selected !== quiz.correct) {
+                    option.classList.add('wrong');
+                }
+            });
+
+            if (selected === quiz.correct) {
+                score++;
+            }
+
+            setTimeout(() => {
+                currentQuestion++;
+                loadQuiz();
+            }, 1500);
+        }
+
+        function updateProgress() {
+            const progressContainer = document.getElementById('quizProgress');
+            let dots = '';
+            for (let i = 0; i < quizData.length; i++) {
+                const isActive = i === currentQuestion;
+                const isPast = i < currentQuestion;
+                dots += `<div class="w-3 h-3 rounded-full ${isActive ? 'bg-white' : isPast ? 'bg-green-400' : 'bg-white/30'}"></div>`;
+            }
+            progressContainer.innerHTML = dots;
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').classList.add('hidden');
+            document.getElementById('quizResult').classList.remove('hidden');
+            document.getElementById('quizProgress').classList.add('hidden');
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            let message = '';
+            
+            if (percentage >= 80) {
+                message = '🌟 Luar biasa! Anda memahami materi dengan sangat baik!';
+            } else if (percentage >= 60) {
+                message = '👍 Bagus! Terus pelajari materi untuk pemahaman lebih baik.';
+            } else {
+                message = '📚 Ayo pelajari lagi materinya untuk hasil yang lebih baik!';
+            }
+            
+            document.getElementById('scoreText').innerHTML = `
+                <div class="text-4xl font-bold text-indigo-600 mb-2">${score}/${quizData.length}</div>
+                <div class="text-gray-600">${message}</div>
+            `;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('quizContent').classList.remove('hidden');
+            document.getElementById('quizResult').classList.add('hidden');
+            document.getElementById('quizProgress').classList.remove('hidden');
+            loadQuiz();
+        }
+
+        // Back to Top
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTop.classList.remove('hidden');
+                backToTop.classList.add('flex');
+            } else {
+                backToTop.classList.add('hidden');
+                backToTop.classList.remove('flex');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offsetTop = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Initialize
+        loadQuiz();
+    </script>
+</body>
+</html>
