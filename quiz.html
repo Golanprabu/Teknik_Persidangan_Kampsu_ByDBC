@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teknik Persidangan Dalam Organisasi</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .quiz-option:hover {
+            background: #e0f2fe;
+        }
+        
+        .quiz-option.correct {
+            background: #bbf7d0 !important;
+            border-color: #22c55e !important;
+        }
+        
+        .quiz-option.wrong {
+            background: #fecaca !important;
+            border-color: #ef4444 !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Quiz Section -->
+    <section id="quiz" class="py-16 bg-gradient-to-br from-indigo-600 to-purple-700 text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-12">
+                    <span class="bg-white text-indigo-600 px-4 py-1 rounded-full text-sm font-medium">Evaluasi</span>
+                    <h2 class="text-3xl font-bold mt-4">Quiz Pemahaman 📝</h2>
+                    <p class="text-indigo-200 mt-2">Uji pemahaman Anda tentang teknik persidangan!</p>
+                </div>
+
+                <div id="quizContainer" class="bg-white rounded-2xl p-6 text-gray-800">
+                    <div id="quizContent">
+                        <!-- Quiz will be loaded here -->
+                    </div>
+                    
+                    <div id="quizResult" class="hidden text-center py-8">
+                        <div class="text-6xl mb-4">🎉</div>
+                        <h3 class="text-2xl font-bold text-gray-800">Quiz Selesai!</h3>
+                        <p id="scoreText" class="text-lg text-gray-600 mt-2"></p>
+                        <button onclick="restartQuiz()" class="mt-6 bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-700 transition">
+                            Ulangi Quiz
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="quizProgress" class="mt-6 flex justify-center gap-2">
+                    <!-- Progress dots -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <div class="text-3xl mb-4">🏛️</div>
+            <h3 class="font-bold text-xl mb-2">Teknik Persidangan Dalam Organisasi</h3>
+            <p class="text-gray-400 text-sm">Materi Pembelajaran untuk Mahasiswa Baru</p>
+            <div class="mt-6 pt-6 border-t border-gray-800 text-gray-500 text-sm">
+                <p>© 2024 - Materi Pendidikan Organisasi</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button id="backToTop" onclick="scrollToTop()" class="fixed bottom-6 right-6 bg-blue-600 text-white w-12 h-12 rounded-full shadow-lg hover:bg-blue-700 transition hidden items-center justify-center z-50">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+        </svg>
+    </button>
+
+    <script>
+        // Quiz
+        const quizData = [
+            // BAGIAN 1: Latar Belakang & Definisi
+            {
+                question: "Apa yang dimaksud dengan persidangan?",
+                options: [
+                    "Pertemuan informal untuk bertukar pikiran",
+                    "Pertemuan formal organisasi untuk membahas masalah dan menghasilkan ketetapan bersama",
+                    "Rapat biasa tanpa aturan khusus",
+                    "Diskusi kelompok kecil"
+                ],
+                correct: 1
+            },
+            {
+                question: "Bagaimana sifat keputusan yang dihasilkan dari sebuah persidangan?",
+                options: [
+                    "Bisa diubah kapan saja oleh siapa saja",
+                    "Hanya mengikat yang hadir saat sidang",
+                    "Final dan mengikat seluruh elemen organisasi",
+                    "Hanya berlaku untuk yang setuju"
+                ],
+                correct: 2
+            },
+            {
+                question: "Kepada siapa ketetapan persidangan berlaku?",
+                options: [
+                    "Hanya yang hadir dan setuju",
+                    "Hanya yang hadir saat persidangan",
+                    "Yang setuju maupun tidak, hadir maupun tidak hadir",
+                    "Hanya pengurus organisasi"
+                ],
+                correct: 2
+            },
+            {
+                question: "Kapan ketetapan persidangan dapat diubah?",
+                options: [
+                    "Kapan saja oleh presidium",
+                    "Setelah diadakan perubahan melalui persidangan berikutnya",
+                    "Tidak bisa diubah selamanya",
+                    "Cukup dengan persetujuan ketua organisasi"
+                ],
+                correct: 1
+            },
+            {
+                question: "Mengapa organisasi formal membutuhkan persidangan?",
+                options: [
+                    "Untuk formalitas saja",
+                    "Agar pembahasan fokus dan berimbang untuk hasil maksimal",
+                    "Karena diwajibkan oleh pemerintah",
+                    "Untuk menghabiskan anggaran"
+                ],
+                correct: 1
+            },
+            // BAGIAN 2: Jenis-Jenis Persidangan
+            {
+                question: "Sidang apa yang berfungsi membahas dan memutuskan segala sesuatu yang berhubungan dengan permusyawaratan?",
+                options: [
+                    "Sidang Komisi",
+                    "Sidang Paripurna",
+                    "Sidang Pleno",
+                    "Sidang Umum"
+                ],
+                correct: 2
+            },
+            {
+                question: "Apa fungsi utama Sidang Paripurna?",
+                options: [
+                    "Membahas materi per komisi",
+                    "Mengesahkan segala ketetapan dan keputusan",
+                    "Memilih presidium sidang",
+                    "Membentuk panitia"
+                ],
+                correct: 1
+            },
+            {
+                question: "Siapa yang memimpin Sidang Pleno?",
+                options: [
+                    "Ketua Panitia",
+                    "Steering Committee",
+                    "Presidium Sidang",
+                    "Ketua Komisi"
+                ],
+                correct: 2
+            },
+            {
+                question: "Siapa yang biasanya memandu jalannya Sidang Pleno?",
+                options: [
+                    "Presidium Sidang",
+                    "Steering Committee (Panitia Pengarah)",
+                    "Sekretaris Sidang",
+                    "Peserta Senior"
+                ],
+                correct: 1
+            },
+            {
+                question: "Bagaimana cara menentukan anggota masing-masing Komisi?",
+                options: [
+                    "Ditentukan oleh Presidium Sidang",
+                    "Ditentukan oleh Sidang Pleno",
+                    "Memilih sendiri sesuai minat",
+                    "Ditentukan oleh panitia pelaksana"
+                ],
+                correct: 1
+            },
+            {
+                question: "Siapa yang memimpin Sidang Komisi?",
+                options: [
+                    "Presidium Sidang Pleno",
+                    "Steering Committee",
+                    "Pimpinan yang dipilih dari dan oleh anggota Komisi tersebut",
+                    "Ketua Umum Organisasi"
+                ],
+                correct: 2
+            },
+            {
+                question: "Siapa saja yang mengikuti Sidang Paripurna?",
+                options: [
+                    "Hanya peserta penuh",
+                    "Hanya perwakilan komisi",
+                    "Seluruh peserta dan peninjau permusyawaratan",
+                    "Hanya presidium dan panitia"
+                ],
+                correct: 2
+            },
+            // BAGIAN 3: Peserta Sidang
+            {
+                question: "Hak apa saja yang dimiliki oleh Peserta Penuh?",
+                options: [
+                    "Hak Bicara saja",
+                    "Hak Bicara, Hak Suara, Hak Memilih, dan Hak Dipilih",
+                    "Hak Suara dan Hak Memilih saja",
+                    "Hak Dipilih saja"
+                ],
+                correct: 1
+            },
+            {
+                question: "Hak apa yang TIDAK dimiliki oleh Peserta Peninjau?",
+                options: [
+                    "Hak Bicara",
+                    "Hak bertanya",
+                    "Hak Suara",
+                    "Hak mengajukan usulan"
+                ],
+                correct: 2
+            },
+            {
+                question: "Apa yang dimaksud dengan Hak Suara?",
+                options: [
+                    "Hak untuk berbicara dalam sidang",
+                    "Hak untuk ikut ambil bagian dalam pengambilan keputusan",
+                    "Hak untuk memilih calon dalam pemilihan",
+                    "Hak untuk mencalonkan diri"
+                ],
+                correct: 1
+            },
+            {
+                question: "Apa perbedaan antara Hak Memilih dan Hak Dipilih?",
+                options: [
+                    "Tidak ada perbedaan",
+                    "Hak Memilih untuk menentukan pilihan, Hak Dipilih untuk dapat dipilih dalam proses pemilihan",
+                    "Hak Memilih hanya untuk ketua, Hak Dipilih untuk anggota",
+                    "Keduanya sama-sama tentang pemungutan suara"
+                ],
+                correct: 1
+            },
+            {
+                question: "Apa kewajiban yang sama antara Peserta Penuh dan Peserta Peninjau?",
+                options: [
+                    "Mengikuti voting",
+                    "Mentaati tata tertib dan menjaga ketenangan sidang",
+                    "Menjadi kandidat pemilihan",
+                    "Memimpin sidang komisi"
+                ],
+                correct: 1
+            },
+            {
+                question: "Hak Bicara mencakup hal-hal berikut, KECUALI...",
+                options: [
+                    "Bertanya",
+                    "Mengeluarkan pendapat",
+                    "Mengambil keputusan final",
+                    "Mengajukan usulan"
+                ],
+                correct: 2
+            },
+            // BAGIAN 4: Presidium Sidang
+            {
+                question: "Bagaimana Presidium Sidang dipilih?",
+                options: [
+                    "Ditunjuk oleh ketua organisasi",
+                    "Dipilih dari dan oleh peserta melalui Sidang Pleno",
+                    "Ditentukan oleh panitia pelaksana",
+                    "Berdasarkan senioritas"
+                ],
+                correct: 1
+            },
+            {
+                question: "Berikut adalah syarat-syarat Presidium Sidang, KECUALI...",
+                options: [
+                    "Mempunyai sifat leadership dan bijaksana",
+                    "Memiliki pengetahuan yang cukup tentang persidangan",
+                    "Harus merupakan ketua organisasi",
+                    "Mampu mengontrol emosi"
+                ],
+                correct: 2
+            },
+            {
+                question: "Sikap yang harus dimiliki Presidium Sidang adalah...",
+                options: [
+                    "Tegas, otoriter, dan tidak menerima masukan",
+                    "Simpatik, tegas, adil, dan menghargai pendapat peserta",
+                    "Pasif dan mengikuti arus mayoritas",
+                    "Keras dan tidak kompromi"
+                ],
+                correct: 1
+            },
+            {
+                question: "Apa tugas utama Presidium Sidang?",
+                options: [
+                    "Membuat keputusan sendiri",
+                    "Memimpin dan mengatur jalannya persidangan",
+                    "Menulis notulensi sidang",
+                    "Menyediakan konsumsi peserta"
+                ],
+                correct: 1
+            },
+            {
+                question: "Mengapa Presidium Sidang harus peka terhadap situasi?",
+                options: [
+                    "Agar bisa mengikuti kemauan mayoritas",
+                    "Untuk cepat mengambil inisiatif dalam situasi kritis",
+                    "Supaya sidang cepat selesai",
+                    "Agar tidak ada yang protes"
+                ],
+                correct: 1
+            },
+            // BAGIAN 5: Ketukan Palu
+            {
+                question: "Berapa kali ketukan palu untuk membuka sidang?",
+                options: [
+                    "1 kali",
+                    "2 kali",
+                    "3 kali",
+                    "4 kali"
+                ],
+                correct: 2
+            },
+            {
+                question: "Kapan digunakan 1 kali ketukan palu?",
+                options: [
+                    "Membuka dan menutup sidang",
+                    "Skorsing waktu lama untuk istirahat",
+                    "Menerima/menyerahkan pimpinan sidang atau keputusan sementara per poin",
+                    "Mengesahkan keputusan final"
+                ],
+                correct: 2
+            },
+            {
+                question: "Kapan digunakan 2 kali ketukan palu?",
+                options: [
+                    "Membuka sidang",
+                    "Skorsing waktu lama (istirahat, lobbying, makan)",
+                    "Menutup sidang",
+                    "Mengesahkan keputusan final"
+                ],
+                correct: 1
+            },
+            {
+                question: "Apa yang dimaksud dengan skorsing?",
+                options: [
+                    "Pembubaran sidang",
+                    "Penundaan persidangan untuk sementara waktu",
+                    "Pemindahan tempat sidang",
+                    "Pergantian presidium"
+                ],
+                correct: 1
+            },
+            {
+                question: "Apa yang dimaksud dengan lobbying?",
+                options: [
+                    "Pemungutan suara",
+                    "Bentuk kompromi dalam menyelesaikan perbedaan pendapat",
+                    "Interupsi dalam sidang",
+                    "Pembacaan hasil keputusan"
+                ],
+                correct: 1
+            },
+            // BAGIAN 6: Quorum & Pengambilan Keputusan
+            {
+                question: "Berapa jumlah minimal peserta agar sidang dinyatakan quorum/sah?",
+                options: [
+                    "¼ dari peserta terdaftar",
+                    "½ + 1 dari peserta terdaftar",
+                    "¾ dari peserta terdaftar",
+                    "Seluruh peserta harus hadir"
+                ],
+                correct: 1
+            },
+            {
+                question: "Apa dasar utama pengambilan keputusan dalam persidangan?",
+                options: [
+                    "Keputusan presidium",
+                    "Suara terbanyak langsung",
+                    "Musyawarah untuk mufakat",
+                    "Undian"
+                ],
+                correct: 2
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        function loadQuiz() {
+            if (currentQuestion >= quizData.length) {
+                showResult();
+                return;
+            }
+
+            answered = false;
+            const quiz = quizData[currentQuestion];
+            const quizContent = document.getElementById('quizContent');
+            
+            let optionsHTML = '';
+            quiz.options.forEach((option, index) => {
+                optionsHTML += `
+                    <button onclick="checkAnswer(${index})" class="quiz-option w-full text-left p-4 border-2 border-gray-200 rounded-xl mb-3 hover:border-indigo-400 transition">
+                        <span class="font-medium text-gray-700">${String.fromCharCode(65 + index)}.</span> ${option}
+                    </button>
+                `;
+            });
+
+            quizContent.innerHTML = `
+                <div class="mb-6">
+                    <span class="text-sm text-indigo-600 font-medium">Pertanyaan ${currentQuestion + 1} dari ${quizData.length}</span>
+                    <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                        <div class="bg-indigo-600 h-2 rounded-full transition-all" style="width: ${((currentQuestion) / quizData.length) * 100}%"></div>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-6">${quiz.question}</h3>
+                <div class="space-y-3">
+                    ${optionsHTML}
+                </div>
+            `;
+
+            updateProgress();
+        }
+
+        function checkAnswer(selected) {
+            if (answered) return;
+            answered = true;
+
+            const quiz = quizData[currentQuestion];
+            const options = document.querySelectorAll('.quiz-option');
+            
+            options.forEach((option, index) => {
+                option.disabled = true;
+                if (index === quiz.correct) {
+                    option.classList.add('correct');
+                } else if (index === selected && selected !== quiz.correct) {
+                    option.classList.add('wrong');
+                }
+            });
+
+            if (selected === quiz.correct) {
+                score++;
+            }
+
+            setTimeout(() => {
+                currentQuestion++;
+                loadQuiz();
+            }, 1500);
+        }
+
+        function updateProgress() {
+            const progressContainer = document.getElementById('quizProgress');
+            let dots = '';
+            for (let i = 0; i < quizData.length; i++) {
+                const isActive = i === currentQuestion;
+                const isPast = i < currentQuestion;
+                dots += `<div class="w-3 h-3 rounded-full ${isActive ? 'bg-white' : isPast ? 'bg-green-400' : 'bg-white/30'}"></div>`;
+            }
+            progressContainer.innerHTML = dots;
+        }
+
+        function showResult() {
+            document.getElementById('quizContent').classList.add('hidden');
+            document.getElementById('quizResult').classList.remove('hidden');
+            document.getElementById('quizProgress').classList.add('hidden');
+            
+            const percentage = Math.round((score / quizData.length) * 100);
+            let message = '';
+            
+            if (percentage >= 80) {
+                message = '🌟 Luar biasa! Anda memahami materi dengan sangat baik!';
+            } else if (percentage >= 60) {
+                message = '👍 Bagus! Terus pelajari materi untuk pemahaman lebih baik.';
+            } else {
+                message = '📚 Ayo pelajari lagi materinya untuk hasil yang lebih baik!';
+            }
+            
+            document.getElementById('scoreText').innerHTML = `
+                <div class="text-4xl font-bold text-indigo-600 mb-2">${score}/${quizData.length}</div>
+                <div class="text-gray-600">${message}</div>
+            `;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('quizContent').classList.remove('hidden');
+            document.getElementById('quizResult').classList.add('hidden');
+            document.getElementById('quizProgress').classList.remove('hidden');
+            loadQuiz();
+        }
+
+        // Initialize
+        loadQuiz();
+    </script>
+</body>
+</html>
